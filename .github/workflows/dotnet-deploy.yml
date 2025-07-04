@@ -12,7 +12,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: bartek-ecommerceapi-d0h5dcgfdzephvgt   # <-- WAŻNE: Wpisz tutaj unikalną nazwę swojej aplikacji z Azure!
   DOTNET_VERSION: '8.0.x'
-  PROJECT_PATH: 'ECommerceAPI/ECommerceAPI.csproj'
+  PROJECT_PATH: 'ECommerceApi/ECommerceApi.csproj'
 
 jobs:
   build-and-deploy:

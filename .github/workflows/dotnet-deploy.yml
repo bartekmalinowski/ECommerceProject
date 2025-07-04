@@ -12,7 +12,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: bartek-ecommerceapi-d0h5dcgfdzephvgt   # <-- WAŻNE: Wpisz tutaj unikalną nazwę swojej aplikacji z Azure!
   DOTNET_VERSION: '8.0.x'
-  PROJECT_PATH: 'ECommerceApi/ECommerceApi.csproj'
+  PROJECT_PATH: 'ECommerceApi.csproj'
 
 jobs:
   build-and-deploy:
@@ -42,7 +42,7 @@ jobs:
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v3
       with:
-        app-name: ${{ env.bartek-ecommerceapi-d0h5dcgfdzephvgt }}
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
         # Używamy sekretu, który skonfigurowaliśmy wcześniej w GitHub
         publish-profile: ${{ secrets.BARTEK_MALINA_SECRET }}
         # Ścieżka do paczki, którą stworzyliśmy w kroku "Publish"

@@ -1,5 +1,5 @@
 # Nazwa workflow, która będzie widoczna w zakładce "Actions" na GitHubie
-name: Deploy .NET API to Azure
+name: Build and Deploy .NET API to Azure
 
 # Konfiguracja triggera (wyzwalacza)
 on:
@@ -8,42 +8,60 @@ on:
       - main  # Uruchom workflow po każdym push na gałąź main
   workflow_dispatch: # Umożliwia ręczne uruchomienie workflow z interfejsu GitHub
 
-# Definicja zmiennych środowiskowych używanych w całym workflow
+# Definicja zmiennych środowiskowych
 env:
-  AZURE_WEBAPP_NAME: bartek-ecommerceapi-d0h5dcgfdzephvgt   # <-- WAŻNE: Wpisz tutaj unikalną nazwę swojej aplikacji z Azure!
+  AZURE_WEBAPP_NAME: bartek-ecommerceapi-d0h5dcgfdzephvgt  # Twoja nazwa aplikacji z Azure
   DOTNET_VERSION: '8.0.x'
-  PROJECT_PATH: 'ECommerceApi.csproj'
+  PROJECT_PATH: 'ECommerceProject/ECommerceAPI/ECommerceAPI.csproj'
 
 jobs:
-  build-and-deploy:
-    # Używamy najnowszej stabilnej wersji Ubuntu jako maszyny budującej
+  # --- ZADANIE 1: ETAP BUDOWANIA APLIKACJI ---
+  build:
     runs-on: ubuntu-latest
-
+    
     steps:
-    # Krok 1: Pobranie kodu źródłowego z repozytorium
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Krok 2: Konfiguracja środowiska .NET
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    # Krok 3: Zbudowanie projektu w konfiguracji Release
-    - name: Build with dotnet
-      run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.PROJECT_PATH }}
 
-    # Krok 4: Opublikowanie projektu (stworzenie paczki do wdrożenia)
-    - name: Publish with dotnet
-      run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --output ./publish
+    - name: Build project
+      run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore
 
-    # Krok 5: Wdrożenie aplikacji na Azure App Service
+    - name: Publish project
+      run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --no-build --output ./publish
+
+    # Krok kluczowy: Zapisujemy wynik budowania (folder ./publish) jako artefakt
+    - name: Upload artifact for deployment
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotnet-app
+        path: ./publish
+
+  # --- ZADANIE 2: ETAP AUTOMATYCZNEGO WDROŻENIA W AZURE ---
+  deploy:
+    # To zadanie uruchomi się tylko wtedy, gdy zadanie 'build' zakończy się sukcesem
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    # Krok kluczowy: Pobieramy artefakt stworzony w zadaniu 'build'
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: dotnet-app
+        path: ./publish # Rozpakuj do folderu ./publish
+
+    # Wdrażamy zawartość artefaktu na Azure
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.bartek-ecommerceapi-d0h5dcgfdzephvgt }}
-        # Używamy sekretu, który skonfigurowaliśmy wcześniej w GitHub
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        # Ścieżka do paczki, którą stworzyliśmy w kroku "Publish"
         package: './publish'

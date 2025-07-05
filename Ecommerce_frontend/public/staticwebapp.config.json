@@ -1,0 +1,22 @@
+{
+    "platform": {
+      "apiRuntime": "node:18",
+      "appBuildCommand": "npm run build",
+      "outputLocation": "dist",
+      "appLocation": "ecommerce-frontend"
+    },
+    "routes": [
+      {
+        "route": "/index.html",
+        "rewrite": "/index.html"
+      }
+    ],
+    "navigationFallback": {
+      "rewrite": "/index.html"
+    },
+    "responseOverrides": {
+      "404": {
+        "rewrite": "/index.html"
+      }
+    }
+  }

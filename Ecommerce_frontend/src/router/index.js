@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// Usunęliśmy import HomeView
-
-// Importujemy tylko te widoki, które istnieją
+// NOWOŚĆ: Importujemy nasz nowy widok strony głównej
+import HomeView from '../views/HomeView.vue'
 import ManageProducts from '../views/ManageProducts.vue'
 import ManageOrders from '../views/ManageOrders.vue'
 
@@ -9,10 +8,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      // Gdy użytkownik wejdzie na stronę główną ('/'),
-      // zostanie automatycznie przekierowany na '/products'.
+      // ZMIANA: Zamiast przekierowania, ustawiamy komponent dla ścieżki głównej
       path: '/',
-      redirect: '/products'
+      name: 'home',
+      component: HomeView
     },
     {
       path: '/products',

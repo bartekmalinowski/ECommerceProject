@@ -1,22 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// Usunęliśmy import HomeView
+
+// Importujemy tylko te widoki, które istnieją
 import ManageProducts from '../views/ManageProducts.vue'
-import ManageOrders from '../views/ManageOrders.vue' // NOWOŚĆ: Import widoku zamówień
+import ManageOrders from '../views/ManageOrders.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      // Gdy użytkownik wejdzie na stronę główną ('/'),
+      // zostanie automatycznie przekierowany na '/products'.
       path: '/',
-      name: 'home',
-      component: HomeView
+      redirect: '/products'
     },
     {
       path: '/products',
       name: 'manage-products',
       component: ManageProducts
     },
-    { // NOWOŚĆ: Dodanie ścieżki dla zamówień
+    {
       path: '/orders',
       name: 'manage-orders',
       component: ManageOrders

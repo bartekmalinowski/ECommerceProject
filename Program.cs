@@ -10,8 +10,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowVueApp",
         builder =>
         {
-            // W trybie deweloperskim Vue często działa na porcie 5173
-            builder.WithOrigins("http://localhost:5173") 
+            builder.WithOrigins(
+                "http://localhost:5173",  // Dev lokalnie
+                "https://delightful-stone-0b3f82703.1.azurestaticapps.net"  // Azure Static Web Apps
+            )
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });

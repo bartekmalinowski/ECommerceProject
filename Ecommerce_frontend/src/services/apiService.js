@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5106/api', // <-- Upewnij się, że port jest prawidłowy!
+    baseURL: 'https://bartek-ecommerceapi-d0h5dcgfdzephvgt.polandcentral-01.azurewebsites.net/api', // Azure API
     headers: {
         'Content-Type': 'application/json'
     }

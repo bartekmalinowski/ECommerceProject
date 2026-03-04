@@ -10,7 +10,7 @@ Pełnostakowa aplikacja do zarządzania produktami i zamówieniami z automatyczn
 |-----------|------|
 | **Frontend** | [https://delightful-stone-0b3f82703.1.azurestaticapps.net](https://delightful-stone-0b3f82703.1.azurestaticapps.net) |
 | **Swagger API** | [https://bartek-ecommerceapi-d0h5dcgfdzephvgt.polandcentral-01.azurewebsites.net/swagger](https://bartek-ecommerceapi-d0h5dcgfdzephvgt.polandcentral-01.azurewebsites.net/swagger) |
-| **API Endpoint** | `https://bartek-ecommerceapi-d0h5dcgfdzephvgt.polandcentral-01.azurewebsites.net/api` |
+| **API Endpoint** | [https://bartek-ecommerceapi-d0h5dcgfdzephvgt.polandcentral-01.azurewebsites.net/api](https://bartek-ecommerceapi-d0h5dcgfdzephvgt.polandcentral-01.azurewebsites.net/api) |
 
 ---
 

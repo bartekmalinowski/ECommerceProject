@@ -47,8 +47,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 // 3. Użyj polityki CORS
-app.UseCors("AllowVueApp"); 
+app.UseCors("AllowVueApp");
 
 app.UseAuthorization();
 
